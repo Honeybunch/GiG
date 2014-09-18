@@ -52,6 +52,8 @@ public:
         sizePolicy.setHeightForWidth(webView->sizePolicy().hasHeightForWidth());
         webView->setSizePolicy(sizePolicy);
         webView->setMinimumSize(QSize(320, 240));
+        webView->setAutoFillBackground(true);
+        webView->setStyleSheet(QStringLiteral(""));
         webView->setUrl(QUrl(QStringLiteral("about:blank")));
 
         gridLayout->addWidget(webView, 0, 0, 1, 1);

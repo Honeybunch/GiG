@@ -8,7 +8,7 @@ StartWindow::StartWindow(QWidget *parent) :
     ui->setupUi(this);
 
 
-    QString html = "<object type=\"application/x-shockwave-flash\" height=\"";
+    QString html = "<object type=\"application/x-shockwave-flash\" style=\"position:fixed;top:0px;left:0px;padding:0px;margin:0px;\" height=\"";
     html += QString::number(ui->webView->size().width());
     html += "\" width=\"";
     html += QString::number(ui->webView->size().height());
@@ -56,8 +56,8 @@ void StartWindow::resizeEvent(QResizeEvent* event)
 {
     QWebElement object = ui->webView->page()->mainFrame()->findFirstElement("#live_embed_player_flash");
 
-    int newWidth = ui->webView->size().width() - 20;
-    int newHeight = ui->webView->size().height() - 20;
+    int newWidth = ui->webView->size().width();
+    int newHeight = ui->webView->size().height();
 
     object.setAttribute("width", QString::number(newWidth));
     object.setAttribute("height", QString::number(newHeight));
@@ -67,7 +67,7 @@ void StartWindow::resizeEvent(QResizeEvent* event)
 
 void StartWindow::setRoundedMask()
 {
-    int radius = 5;
+    int radius = 10;
     QRect rect = this->rect();
 
     QRegion region;
