@@ -19,8 +19,8 @@
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 */
 
-#ifndef STARTWINDOW_H
-#define STARTWINDOW_H
+#ifndef OVERLAYWINDOW_H
+#define OVERLAYWINDOW_H
 
 #include <QMainWindow>
 #include <QDebug>
@@ -30,17 +30,18 @@
 #include <QWebElement>
 
 namespace Ui {
-class StartWindow;
+class OverlayWindow;
 }
 
-class StartWindow : public QMainWindow
+class OverlayWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit StartWindow(QWidget *parent = 0);
+    explicit OverlayWindow(QWidget *parent = 0);
+    void setChannel(QString channel);
 
-    ~StartWindow();
+    ~OverlayWindow();
 
 protected:
 
@@ -53,12 +54,12 @@ protected:
 
 
 private:
-    Ui::StartWindow *ui;
+    Ui::OverlayWindow *ui;
 
-
+    QString channel;
     bool dragging;
     QPoint clickPoint;
 
 };
 
-#endif // STARTWINDOW_H
+#endif // OVERLAYWINDOW_H

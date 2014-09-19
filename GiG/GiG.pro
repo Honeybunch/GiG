@@ -13,8 +13,13 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        startwindow.cpp
+    overlaywindow.cpp \
+    choosewindow.cpp
 
-HEADERS  += startwindow.h
+HEADERS  += \
+    overlaywindow.h \
+    choosewindow.h
 
-FORMS    += startwindow.ui
+FORMS    += \
+    overlaywindow.ui \
+    choosewindow.ui

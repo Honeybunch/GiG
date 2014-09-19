@@ -19,29 +19,40 @@
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 */
 
-#include "startwindow.h"
-#include "ui_startwindow.h"
+#include "overlaywindow.h"
+#include "ui_overlaywindow.h"
 
-StartWindow::StartWindow(QWidget *parent) :
+OverlayWindow::OverlayWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::StartWindow)
+    ui(new Ui::OverlayWindow)
 {
     ui->setupUi(this);
 
+    ui->webView->settings()->globalSettings()->setAttribute(QWebSettings::PluginsEnabled, true);
+
+    dragging = false;
+
+    qDebug() << "Constructed";
+}
+
+void OverlayWindow::setChannel(QString channel)
+{
+    this->channel = channel;
 
     QString html = "<object type=\"application/x-shockwave-flash\" style=\"position:fixed;top:0px;left:0px;padding:0px;margin:0px;\" height=\"";
     html += QString::number(ui->webView->size().width());
     html += "\" width=\"";
     html += QString::number(ui->webView->size().height());
-    html += "\" id=\"live_embed_player_flash\" data=\"http://www.twitch.tv/widgets/live_embed_player.swf?channel=twitchplayspokemon\" bgcolor=\"#000000\"><param name=\"allowFullScreen\" value=\"true\" /><param name=\"allowScriptAccess\" value=\"always\" /><param name=\"allowNetworking\" value=\"all\" /><param name=\"movie\" value=\"http://www.twitch.tv/widgets/live_embed_player.swf\" /><param name=\"flashvars\" value=\"hostname=www.twitch.tv&channel=twitchplayspokemon&auto_play=true&start_volume=25\" /></object>";
+    html += "\" id=\"live_embed_player_flash\" data=\"http://www.twitch.tv/widgets/live_embed_player.swf?channel=";
+    html += channel;
+    html += "\" bgcolor=\"#000000\"><param name=\"allowFullScreen\" value=\"false\" /><param name=\"allowScriptAccess\" value=\"always\" /><param name=\"allowNetworking\" value=\"all\" /><param name=\"movie\" value=\"http://www.twitch.tv/widgets/live_embed_player.swf\" /><param name=\"flashvars\" value=\"hostname=www.twitch.tv&channel=";
+    html += channel;
+    html += "&auto_play=true&start_volume=25\" /></object>";
 
     ui->webView->setHtml(html);
-    ui->webView->settings()->globalSettings()->setAttribute(QWebSettings::PluginsEnabled, true);
-
-    dragging = false;
 }
 
-void StartWindow::mousePressEvent(QMouseEvent* event)
+void OverlayWindow::mousePressEvent(QMouseEvent* event)
 {
     if(event->button() == Qt::LeftButton)
     {
@@ -51,7 +62,7 @@ void StartWindow::mousePressEvent(QMouseEvent* event)
     }
 }
 
-void StartWindow::mouseMoveEvent(QMouseEvent* event)
+void OverlayWindow::mouseMoveEvent(QMouseEvent* event)
 {
     if(!dragging)
         return;
@@ -61,7 +72,7 @@ void StartWindow::mouseMoveEvent(QMouseEvent* event)
     QApplication::setOverrideCursor(Qt::SizeAllCursor);
 }
 
-void StartWindow::mouseReleaseEvent(QMouseEvent* event)
+void OverlayWindow::mouseReleaseEvent(QMouseEvent* event)
 {
     if(event->button() == Qt::LeftButton)
     {
@@ -73,7 +84,7 @@ void StartWindow::mouseReleaseEvent(QMouseEvent* event)
     }
 }
 
-void StartWindow::resizeEvent(QResizeEvent* event)
+void OverlayWindow::resizeEvent(QResizeEvent* event)
 {
     QWebElement object = ui->webView->page()->mainFrame()->findFirstElement("#live_embed_player_flash");
 
@@ -86,7 +97,7 @@ void StartWindow::resizeEvent(QResizeEvent* event)
     this->setRoundedMask();
 }
 
-void StartWindow::setRoundedMask()
+void OverlayWindow::setRoundedMask()
 {
     int radius = 10;
     QRect rect = this->rect();
@@ -113,7 +124,7 @@ void StartWindow::setRoundedMask()
     this->setMask(region);
 }
 
-StartWindow::~StartWindow()
+OverlayWindow::~OverlayWindow()
 {
     delete ui;
 }

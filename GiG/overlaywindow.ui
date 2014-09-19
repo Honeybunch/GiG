@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>StartWindow</class>
- <widget class="QMainWindow" name="StartWindow">
+ <class>OverlayWindow</class>
+ <widget class="QMainWindow" name="OverlayWindow">
   <property name="windowModality">
    <enum>Qt::ApplicationModal</enum>
   </property>
@@ -14,7 +14,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>StartWindow</string>
+   <string>OverlayWindow</string>
   </property>
   <property name="documentMode">
    <bool>false</bool>
